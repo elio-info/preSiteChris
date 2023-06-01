@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href='assets/plugins/fullcalendar/fullcalendar.css' rel='stylesheet' />
+    <link href='assets/plugins/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+
+    <style>
+
+        body {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        }
+
+        #calendar {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+<div id='calendar'></div>
+</body>
+<script src='assets/plugins/fullcalendar/jquery-1.9.1.min.js'></script>
+<script src='assets/plugins/fullcalendar/jquery-ui-1.10.3.custom.min.js'></script>
+<script src='assets/plugins/fullcalendar/fullcalendar.min.js'></script>
+<!-- este es el que va
+<script src='assets/plugins/fullcalendar/fullcalendar.min.js'></script>
+-->
+<script>
+
+    $(document).ready(function() {
+
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev today', //,''&m-1&+','&m+1&'  hoy'
+                center: 'title',
+                right: 'next'//agendaDay,agendaWeek,month
+            },
+            selectable: true,
+            selectHelper: true,
+            select: function(start, end, allDay) {
+                var title = prompt('Event Title:');
+                if (title) {
+                    calendar.fullCalendar('renderEvent',
+                            {
+                                title: title,
+                                start: start,
+                                end: end,
+                                allDay: allDay
+                            },
+                            true // make the event "stick"
+                    );
+                }
+                calendar.fullCalendar('unselect');
+            },
+            editable: true ,//false
+            events: [
+                {
+                    title: 'All Day Event',
+                    start: new Date(y, m, 1)
+                },
+                {
+                    title: 'Long Event',
+                    start: new Date(y, m, d-5),
+                    end: new Date(y, m, d-2)
+                },
+                {
+                    id: 999,
+                    title: 'Repeating Event',
+                    start: new Date(y, m, d-3, 16, 0),
+                    allDay: false
+                },
+                {
+                    id: 999,
+                    title: 'Repeating Event',
+                    start: new Date(y, m, d+4, 16, 0),
+                    allDay: false
+                },
+                {
+                    title: 'Meeting',
+                    start: new Date(y, m, d, 10, 30),
+                    allDay: false
+                },
+                {
+                    title: 'Lunch',
+                    start: new Date(y, m, d, 12, 0),
+                    end: new Date(y, m, d, 14, 0),
+                    allDay: false
+                },
+                {
+                    title: 'Birthday Party',
+                    start: new Date(y, m, d+1, 19, 0),
+                    end: new Date(y, m, d+1, 22, 30),
+                    allDay: false
+                },
+                {
+                    title: 'Click for Google',
+                    start: new Date(y, m, 28),
+                    end: new Date(y, m, 29),
+                    url: 'http://google.com/'
+                }
+            ]
+        });
+
+    });
+
+</script>
+</html>
